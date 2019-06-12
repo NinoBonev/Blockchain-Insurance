@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.servlet.ModelAndView
 
 @RestController
 class StatesController(rpc: NodeRPCConnection) {
@@ -17,7 +18,7 @@ class StatesController(rpc: NodeRPCConnection) {
     private val proxy = rpc.proxy
 
     @GetMapping("/check-insurance-state")
-    private fun purchaseState(model : Model) : String {
+    private fun purchaseState(model : ModelAndView) : ModelAndView {
         val allPurchaseStatesAndRefs = proxy.vaultQueryBy<PurchaseState>().states
         val allPurchaseStates = allPurchaseStatesAndRefs.map { it.state.data }
 
@@ -33,6 +34,9 @@ class StatesController(rpc: NodeRPCConnection) {
 
         }
 
-        return sb.toString()
+        var mav = ModelAndView()
+        mav.addObject("states", sb.toString())
+
+        return mav
     }
 }
