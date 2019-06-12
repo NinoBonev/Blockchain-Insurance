@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/flows")
+@RequestMapping("/")
 class FlowsController(rpc: NodeRPCConnection) {
     private val seller : String = "O=PartyB,L=New York,C=US"
 
@@ -28,7 +28,7 @@ class FlowsController(rpc: NodeRPCConnection) {
     private val proxy = rpc.proxy
     private val gson = Gson()
 
-    @PostMapping(value = "/payflow")
+    @PostMapping(value = ["/pay-insurance"])
     private fun payFlow(
             @RequestParam("id") idString: String,
             @RequestParam("amount") amount: String
@@ -41,7 +41,7 @@ class FlowsController(rpc: NodeRPCConnection) {
         return ResponseEntity<Any>("Paid $amount on ${linearId.id}.", HttpStatus.CREATED)
     }
 
-    @PostMapping(value = "/initflow")
+    @PostMapping(value = ["/sign-insurance"])
     private fun initFlow(@RequestParam("price") price: String, @RequestParam("itemId") itemId : String): ResponseEntity<*> {
 
         val party = proxy.wellKnownPartyFromX500Name(CordaX500Name.parse(seller))

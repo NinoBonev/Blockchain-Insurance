@@ -1,0 +1,83 @@
+.one {
+    position: absolute;
+    background-color: white;
+     width: 100%;
+    height: 670px;
+    background-image: url(https://charmienterprise.in/wp-content/uploads/2017/05/pl1.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.car {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 670px;
+    background-image: url(https://www.turtlemint.com/blog/wp-content/uploads/2017/02/5-things-that-impact-your-Car-Insurance-Premium.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.home {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 670px;
+    background-image: url(https://www.moneycrashers.com/wp-content/uploads/2017/09/home-insurance-form-dollars-on-table-1068x600.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.travel {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 670px;
+    background-image: url(https://www.serbooking.com/wp-content/uploads/2019/02/do-you-need-travel-insurance.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.no-decoration {
+    text-decoration: none;
+}
+
+.container {
+    position: relative;
+    background-color: white;
+    margin-left: 5%;
+    margin-top: 2%;
+    height: 80%;
+    width: 90%;
+    opacity: 0.9
+}
+
+.container-home-screen {
+    position: absolute;
+    background-color: white;
+    margin-left: 55%;
+    margin-top: 2%;
+    height: 80%;
+    width: 40%;
+    opacity: 0.9
+}
+
+.insurance-list {
+    margin-left: 20%;
+    margin-top: 5%
+}
+
+.header-text {
+    font-size: 21px;
+    color: white;
+    font-style: strong;
+}
+
+.header-text:hover {
+     cursor: pointer;
+     color: red
+}
