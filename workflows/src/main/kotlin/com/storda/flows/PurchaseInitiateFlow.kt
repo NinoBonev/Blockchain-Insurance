@@ -31,7 +31,7 @@ class PurchaseInitiateFlow {
                 buyer = ourIdentity,
                 seller = seller,
                 price = price,
-                amountPaid = 0.POUNDS,
+                amountPaid = 0.00.POUNDS,
                 itemId = itemId
             )
             val initiateCommand = Command(

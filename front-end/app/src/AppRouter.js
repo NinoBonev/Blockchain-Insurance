@@ -6,7 +6,7 @@ import HomeInsurance from './components/insurances/HomeInsurance'
 import TravelInsurance from './components/insurances/TravelInsurance'
 
 import SignInsurance from './components/SignInsurance'
-import PayInsurance from './components/PayInsurance'
+import WrappedPayInsurance from './components/PayInsurance'
 import CheckStatus from './components/CheckStatus'
 
 import Home from './components/Home'
@@ -16,45 +16,50 @@ const AppRouter = (props) => {
     <Switch>
 
           <Route exact path='/' render={(props) =>
-               <Home />
+               <Home {...props}/>
                 }
           />
 
           <Route exact path='/pay-insurance' render={(props) =>
-               <PayInsurance />
+               <WrappedPayInsurance {...props}/>
                }
           />
 
           <Route exact path='/check-status' render={(props) =>
-              <CheckStatus />
+              <CheckStatus  {...props}/>
               }
           />
 
           <Route exact path='/sign-insurance/car-insurance' render={(props) =>
-              <CarInsurance />
+              <CarInsurance  {...props}/>
                }
           />
 
           <Route exact path='/sign-insurance/home-insurance' render={(props) =>
-               <HomeInsurance />
+               <HomeInsurance  {...props}/>
                 }
           />
 
           <Route exact path='/sign-insurance/travel-insurance' render={(props) =>
-                         <TravelInsurance />
+                         <TravelInsurance   {...props}/>
                           }
                     />
 
 
           <Route exact path='/sign-insurance/car-insurance' render={(props) =>
-              <CarInsurance />
+              <CarInsurance {...props}/>
                }
           />
 
           <Route exact path='/sign-insurance' render={(props) =>
-               <SignInsurance />
+               <SignInsurance {...props}/>
                }
           />
+
+          <Route exact path='/api/sign-insurance' render={(props) =>
+                         <CheckStatus {...props}/>
+                         }
+                    />
 
     </Switch>
     )

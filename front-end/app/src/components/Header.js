@@ -6,7 +6,7 @@ import '../style/app.css'
 
 function Header() {
     return (
-    <div style={{height : '50px', backgroundColor: 'black', align: 'centre'}}>
+    <div className='header'>
         <Link to={{pathname: `/`}} className='no-decoration'>
             <span className='header-text' style={{marginLeft: '40px'}}>Home</span>
         </Link>

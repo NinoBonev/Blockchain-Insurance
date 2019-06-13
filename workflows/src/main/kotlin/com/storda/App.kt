@@ -32,7 +32,7 @@ class StordaApi(val services: CordaRPCOps) {
     @Produces(MediaType.APPLICATION_JSON)
     fun initiatePurchase(
         @QueryParam(value = "seller") seller: String,
-        @QueryParam(value = "priceAmount") priceAmount: Int,
+        @QueryParam(value = "priceAmount") priceAmount: Long,
         @QueryParam(value = "priceCurrency") priceCurrency: String,
         @QueryParam(value = "itemId") itemId: Int
     ): Response {
@@ -41,7 +41,7 @@ class StordaApi(val services: CordaRPCOps) {
         val counterParty = services.wellKnownPartyFromX500Name(CordaX500Name.parse(seller)) ?:
                 throw WebApplicationException("Invalid seller", Response.Status.BAD_REQUEST)
         val amount = Amount(
-            priceAmount.toLong() * 100,
+            priceAmount * 100,
             Currency.getInstance(priceCurrency)
         )
 

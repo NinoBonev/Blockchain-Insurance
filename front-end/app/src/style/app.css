@@ -71,6 +71,11 @@
     margin-top: 5%
 }
 
+.header {
+     height : 50px;
+     background-color: black
+}
+
 .header-text {
     font-size: 21px;
     color: white;
@@ -80,4 +85,9 @@
 .header-text:hover {
      cursor: pointer;
      color: red
+}
+
+.form {
+    margin-left: 21%;
+    margin-right: 21%
 }
