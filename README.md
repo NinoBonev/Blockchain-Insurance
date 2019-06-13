@@ -2,6 +2,11 @@
   <img src="https://www.corda.net/wp-content/uploads/2016/11/fg005_corda_b.png" alt="Corda" width="500">
 </p>
 
+#Tasks done
+
+I've used the cordapp-kotlin-template repo as a skeleton for this app and then created the Spring Boot Controllers, 
+CorDapp contracts and state for the Server and a UI using React.
+
 # Storda
 
 Welcome to the Storda app. This is a simple CorDapp build using Kotlin - Spring Boot - ReactJS - AntDesign UI.
@@ -71,5 +76,5 @@ In terminal from the main folder of your project run the following commands:
 
 The app webpage is served on:
 
-    http://localhost:10030
+    http://localhost:3000
     
