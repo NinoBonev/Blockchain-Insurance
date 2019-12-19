@@ -1,5 +1,6 @@
-package com.storda
+package com.storda.contracts
 
+import com.storda.states.PurchaseState
 import net.corda.core.contracts.*
 import net.corda.core.identity.Party
 import net.corda.core.transactions.LedgerTransaction
@@ -12,7 +13,7 @@ import java.util.*
 
 class PurchaseContract : Contract {
     companion object {
-        const val PROGRAM_ID: ContractClassName = "com.storda.PurchaseContract"
+        const val PROGRAM_ID: ContractClassName = "com.storda.contracts.PurchaseContract"
     }
 
     interface Commands : CommandData {
@@ -36,8 +37,8 @@ class PurchaseContract : Contract {
                         outputState.amountPaid.quantity == 0L)
                 "Buyer and seller should be different identities when initiating a purchase" using (
                         outputState.buyer != outputState.seller)
-                "Both buyer and seller should sign the transaction when initiating a purchase" using (
-                        command.signers.toSet() == outputState.participants.map { it.owningKey }.toSet())
+//                "Both buyer and seller should sign the transaction when initiating a purchase" using (
+//                        command.signers.toSet() == outputState.participants.map { it.owningKey }.toSet())
             }
 
             is Commands.PayInstallment -> requireThat {
@@ -73,16 +74,4 @@ class PurchaseContract : Contract {
 
 }
 
-// *********
-// * State *
-// *********
-data class PurchaseState(
-    val buyer: Party,
-    val seller: Party,
-    val price: Amount<Currency>,
-    val amountPaid: Amount<Currency>,
-    val itemId: String,
-    override val linearId: UniqueIdentifier = UniqueIdentifier()
-) : LinearState {
-    override val participants: List<Party> get() = listOf(buyer, seller)
-}
+

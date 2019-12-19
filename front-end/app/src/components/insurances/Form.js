@@ -31,6 +31,11 @@ class FormClass extends React.Component {
                         rules: [{ required: true, message: 'Please input your object!' }],
                       })(<Input />)}
                     </Form.Item>
+                    <Form.Item label="Account name" style={{marginTop: '5%'}}>
+                                          {getFieldDecorator('accountName', {
+                                            rules: [{ required: true, message: 'Please input your object!' }],
+                                          })(<Input />)}
+                                        </Form.Item>
                     <Form.Item label="Agreed Price (GBP)" style={{marginTop: '5%'}}>
                               {getFieldDecorator('price', {
                                 rules: [{ required: true, message: 'Please input your price!' }],

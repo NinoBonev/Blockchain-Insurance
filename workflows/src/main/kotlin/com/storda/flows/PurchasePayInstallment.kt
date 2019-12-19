@@ -1,8 +1,9 @@
 package com.storda.flows
 
 import co.paralleluniverse.fibers.Suspendable
-import com.storda.PurchaseContract
-import com.storda.PurchaseState
+import com.r3.corda.lib.accounts.workflows.accountService
+import com.storda.contracts.PurchaseContract
+import com.storda.states.PurchaseState
 import net.corda.core.contracts.*
 import net.corda.core.flows.*
 import net.corda.core.node.services.Vault
@@ -26,9 +27,9 @@ class PurchasePayInstallment {
             val stateAndRef = getPurchaseByLinearId(purchaseId)
             val inputState = stateAndRef.state.data
 
-            val buyer = serviceHub.identityService.requireWellKnownPartyFromAnonymous(inputState.buyer)
+            val buyer = accountService.accountInfo(inputState.buyer!!)
 
-            if (ourIdentity != buyer) {
+            if (ourIdentity.owningKey != buyer!!.state.data.host.owningKey) {
                 throw FlowException("Only the purchase buyer can pay installments")
             }
 
@@ -48,10 +49,10 @@ class PurchasePayInstallment {
 
             builder.verify(serviceHub)
             val partiallySignedTransaction = serviceHub.signInitialTransaction(builder)
-            val sessions = (outputState.participants - ourIdentity).map { initiateFlow(it) }.toSet()
-            val signedTransaction = subFlow(CollectSignaturesFlow(partiallySignedTransaction, sessions))
+            val sessions = initiateFlow(buyer.state.data.host)
+            val signedTransaction = subFlow(CollectSignaturesFlow(partiallySignedTransaction, listOf(sessions)))
 
-            return subFlow(FinalityFlow(signedTransaction))
+            return subFlow(FinalityFlow(signedTransaction, listOf(sessions)))
         }
 
         @Suspendable
@@ -65,20 +66,22 @@ class PurchasePayInstallment {
         }
 
     }
+}
 
-    @InitiatedBy(Initiator::class)
-    class Responder(private val counterPartySession: FlowSession) : FlowLogic<Unit>() {
+@InitiatedBy(PurchasePayInstallment.Initiator::class)
+class PurchasePayInstallmentResponder(private val counterPartySession: FlowSession) : FlowLogic<SignedTransaction>() {
 
-        @Suspendable
-        override fun call() {
-            val signedTransactionFlow = object : SignTransactionFlow(counterPartySession) {
-                override fun checkTransaction(stx: SignedTransaction) = requireThat {
-                    val purchaseState = stx.tx.outputStates.single()
-                    "The output state must be a PurchaseState" using (purchaseState is PurchaseState)
-                }
+    @Suspendable
+    override fun call() : SignedTransaction {
+        val signedTransactionFlow = object : SignTransactionFlow(counterPartySession) {
+            override fun checkTransaction(stx: SignedTransaction) = requireThat {
+                val purchaseState = stx.tx.outputStates.single()
+                "The output state must be a PurchaseState" using (purchaseState is PurchaseState)
             }
-
-            subFlow(signedTransactionFlow)
         }
+
+        val signedId = subFlow(signedTransactionFlow)
+
+        return subFlow(ReceiveFinalityFlow(otherSideSession = counterPartySession, expectedTxId = signedId.id))
     }
 }
